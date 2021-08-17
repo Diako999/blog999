@@ -1,0 +1,19 @@
+<% @users.each do |user| %>
+    <div class="row justify-content-md-center">
+      <div class="col-8">
+          <div class="card text-center mt-4 shadow p-3 mb-5 bg-body rounded">
+            <div class="card-header text-dark">
+              <%= user.username %>
+            </div>
+            <div class="card-body">
+              <%# <%= gravatar_for @user, size: 200 %> %>
+              <%= link_to 'View profile', user_path(user), class: "btn btn-primary" %>
+              <% if user == current_user || current_user.admin %>
+                <%= link_to 'Edit profile', edit_user_path(user), class: "btn btn-success" %>
+                <%= link_to 'Delete profile', user_path(user), class: "btn btn-danger", method: :delete, data: {confirm:"are you sure?"} %>
+              <% end %>
+            </div>
+          </div>
+      </div>
+    </div>
+<% end %>

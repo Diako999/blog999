@@ -1,0 +1,33 @@
+<h1 class="text-center mt-4 text-white">Articles listing page</h1>
+<div class="apple_pagination bg-transparent border-0">
+    <%= will_paginate @articles, :container => false %>
+</div>
+<div class="container">
+  <% @articles.each do |article| %>
+    <div class="row justify-content-md-center">
+      <div class="col-8">
+          <div class="card text-center text-dark mt-4 shadow p-3 mb-5 bg-body rounded">
+            <div class="card-header ">
+              By <%= article.user.username %>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title"><%= article.title %></h5>
+              <p class="card-text"><%= truncate(article.description, length: 100) %></p>
+              <%= link_to 'View', article_path(article), class: "btn btn-primary" %>
+              <% if logged_in && (article.user == current_user || current_user.admin)%>
+                <%= link_to 'Edit', edit_article_path(article), class: "btn btn-success" %>
+                <%= link_to 'Delete', article_path(article), class: "btn btn-danger", method: :delete, data: {confirm: "are you sure??"} %>
+              <% end %>
+            </div>
+            <div class="card-footer text-muted">
+              created <%= time_ago_in_words(article.created_at) %> ago
+              last updated <%= time_ago_in_words(article.updated_at) %> ago
+            </div>
+          </div>
+      </div>
+    </div>
+  <% end %>
+</div>
+<div class="apple_pagination bg-transparent border-0">
+    <%= will_paginate @articles, :container => false %>
+</div>
